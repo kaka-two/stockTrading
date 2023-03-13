@@ -1,6 +1,5 @@
-package com.kakas.stockTrading.order;
+package com.kakas.stockTrading.service;
 
-import com.kakas.stockTrading.asserts.AssertService;
 import com.kakas.stockTrading.enums.AssertType;
 import com.kakas.stockTrading.enums.Direction;
 import com.kakas.stockTrading.pojo.Order;
@@ -13,7 +12,7 @@ import java.util.concurrent.ConcurrentMap;
 
 @Component
 public class OrderService {
-    AssertService assertService;
+    private AssertService assertService;
 
     public OrderService(@Autowired AssertService assertService) {
         this.assertService = assertService;
@@ -54,6 +53,7 @@ public class OrderService {
         ConcurrentMap<Long, Order> map = userOrders.getOrDefault(userId, new ConcurrentHashMap<>());
         map.put(orderId, order);
         userOrders.put(userId, map);
+        return order;
     }
 
 

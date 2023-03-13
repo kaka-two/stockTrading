@@ -1,4 +1,4 @@
-package com.kakas.stockTrading.asserts;
+package com.kakas.stockTrading.service;
 
 import com.kakas.stockTrading.enums.AssertType;
 import com.kakas.stockTrading.enums.TransferType;
@@ -12,7 +12,7 @@ import java.util.concurrent.ConcurrentMap;
 @Component
 public class AssertService {
     // 用户id,资产类型,资产的数据结构表
-    ConcurrentMap<Long, ConcurrentMap<AssertType, Assert>> userAsserts = new ConcurrentHashMap<>();
+    private ConcurrentMap<Long, ConcurrentMap<AssertType, Assert>> userAsserts = new ConcurrentHashMap<>();
 
     // 转账
     public boolean transfer(Long fromUserId, Long toUserId, AssertType assertType, TransferType transferType, BigDecimal num) {

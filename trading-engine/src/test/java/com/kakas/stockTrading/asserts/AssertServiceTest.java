@@ -3,6 +3,7 @@ package com.kakas.stockTrading.asserts;
 import com.kakas.stockTrading.enums.AssertType;
 import com.kakas.stockTrading.enums.TransferType;
 import com.kakas.stockTrading.pojo.Assert;
+import com.kakas.stockTrading.service.AssertService;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.params.ParameterizedTest;
