@@ -36,7 +36,6 @@ public class Order {
     private long createAt;
     // 更新时间
     private long updateAt;
-    // 更新了几次
 
     // 更新订单
     public void updateOrder(BigDecimal unfilledQuantity, OrderStatus orderStatus, long updateAt) {

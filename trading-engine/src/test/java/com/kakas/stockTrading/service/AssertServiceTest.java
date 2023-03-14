@@ -1,4 +1,4 @@
-package com.kakas.stockTrading.asserts;
+package com.kakas.stockTrading.service;
 
 import com.kakas.stockTrading.enums.AssertType;
 import com.kakas.stockTrading.enums.TransferType;

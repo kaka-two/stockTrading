@@ -1,9 +1,12 @@
 package com.kakas.stockTrading.pojo;
 
+import lombok.Data;
+
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Data
 public class MatchResult {
     Order takerOrder;
     List<MatchRecord> records;
