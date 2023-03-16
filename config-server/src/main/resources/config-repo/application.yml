@@ -3,9 +3,9 @@ spring:
   kafka:
     bootstrap-servers: ${KAFKA_SERVER:192.168.36.129:9092}
     consumer:
-      group-id: ${KAFKA_CONSUMER_GROUP_ID:}
-      auto-offset-reset: ${KAFKA_CONSUMER_AUTO_OFFSET_RESET:latest}
+      # 最大提取消息数
       max-poll-records: ${KAFKA_CONSUMER_MAX_POLL_RECORDS:500}
+      # 最大提取字节数
       max-partition-fetch-bytes: ${KAFKA_MAX_PARTITION_FETCH_BYTES:1000000}
 
   # 配置redis
@@ -17,10 +17,12 @@ spring:
 
   # 配置数据库以及连接池设置
   datasource:
+    # 不使用SSL，因为使用的虚拟机数据库，开启允许一次执行多个查询
     url: ${DATASOURCE_URL:jdbc:mysql://192.168.36.129/stockTrading?useSSL=false&allowMultiQueries=true&characterEncoding=utf8}
     username: ${DB_USERNAME:root}
     password: ${DB_PASSWORD:}
     driver-class-name: com.mysql.cj.jdbc.Driver
+    # 连接池配置，取消自动提交，设置超时时间
     hikari:
       auto-commit: false
       connection-timeout: ${DB_TIMEOUT:3000}
