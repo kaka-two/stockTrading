@@ -51,21 +51,34 @@ public class MessageType {
     }
 
     // 将message序列化，并将类型信息存入。
-    public String serialize(Message message) throws JsonProcessingException {
+    public String serialize(Message message){
         String type = message.getClass().getName();
-        String json = objectMapper.writeValueAsString(message);
+        String json = null;
+        try {
+            json = objectMapper.writeValueAsString(message);
+        } catch (JsonProcessingException e) {
+            log.warn("无法写成json", e);
+            throw new RuntimeException(e);
+        }
         return type + ESP + json;
     }
 
     // 将data中类型信息取出，并反序列化为message
-    public Message deserialize(String data) throws JsonProcessingException {
+    public Message deserialize(String data){
         String type = data.substring(0, data.indexOf(ESP));
         String json = data.substring(data.indexOf(ESP));
         Class<? extends Message> clazz = messageType.get(type);
         if (clazz == null) {
             throw new RuntimeException("Message type not found!");
         }
-        return objectMapper.readValue(json, clazz);
+        Message message = null;
+        try {
+            message =  objectMapper.readValue(json, clazz);
+        } catch (JsonProcessingException e) {
+            log.warn("无法读取json" + json, e);
+            throw new RuntimeException(e);
+        }
+        return message;
     }
 
 }
