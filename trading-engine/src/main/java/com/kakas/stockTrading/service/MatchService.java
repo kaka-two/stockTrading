@@ -1,5 +1,7 @@
 package com.kakas.stockTrading.service;
 
+import com.kakas.stockTrading.bean.OrderBookBean;
+import com.kakas.stockTrading.bean.OrderBookItemBean;
 import com.kakas.stockTrading.enums.Direction;
 import com.kakas.stockTrading.enums.OrderStatus;
 import com.kakas.stockTrading.pojo.MatchResult;
@@ -9,6 +11,7 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 @Component
 @Data
@@ -99,4 +102,10 @@ public class MatchService {
         OrderStatus orderStatus = order.getOrderStatus() == OrderStatus.PARTIAL_FILLED ? OrderStatus.PARTIAL_CANCELED : OrderStatus.FULLY_CANCELED;
         order.updateOrder(order.getUnfilledQuantity(), orderStatus, updateAt);
     }
+
+    // 获取MatchService此时的所有消息
+    public OrderBookBean getOrderBookBean(int maxDepth) {
+        return new OrderBookBean(this.lastSequenceId, this.lastPrice, this.buyBook.getOrderBook(maxDepth), this.sellBook.getOrderBook(maxDepth));
+    }
+
 }

@@ -1,10 +1,13 @@
 package com.kakas.stockTrading.pojo;
 
+import com.kakas.stockTrading.bean.OrderBookBean;
+import com.kakas.stockTrading.bean.OrderBookItemBean;
 import com.kakas.stockTrading.enums.Direction;
 import lombok.Data;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 import java.util.TreeMap;
 
 @Data
@@ -62,5 +65,29 @@ public class OrderBook {
             return compare == 0 ? (int) (o1.getSequenceId() - o2.getSequenceId()) : compare;
         }
     };
+
+    // 获取这个OrderBook的快照
+    public List<OrderBookItemBean> getOrderBook(int maxDepth) {
+        List<OrderBookItemBean> items = new ArrayList<>();
+        OrderBookItemBean preItem = null;
+        for (OrderKey key : this.book.keySet()) {
+            Order order = book.get(key);
+            if (preItem == null) {
+                preItem = new OrderBookItemBean(order.getPrice(), order.getQuantity());
+                items.add(preItem);
+                continue;
+            }
+            if (preItem.getPrice().compareTo(order.getPrice()) == 0) {
+                preItem.add(order.getQuantity());
+                continue;
+            }
+            if (items.size() >= maxDepth) {
+                break;
+            }
+            preItem = new OrderBookItemBean(order.getPrice(), order.getQuantity());
+            items.add(preItem);
+        }
+        return items;
+    }
 
 }

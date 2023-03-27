@@ -1,6 +1,8 @@
 package com.kakas.stockTrading.pojo;
 
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.kakas.stockTrading.enums.Direction;
 import com.kakas.stockTrading.enums.OrderStatus;
 import lombok.AllArgsConstructor;
@@ -13,7 +15,9 @@ import java.math.BigDecimal;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Order {
+
     // 订单ID
+    @TableId(value="id", type= IdType.AUTO)
     private Long orderId;
     // 订单关联的用户ID
     private Long userId;
@@ -42,5 +46,23 @@ public class Order {
         this.unfilledQuantity = unfilledQuantity;
         this.orderStatus = orderStatus;
         this.updateAt = updateAt;
+    }
+    public Order copy() {
+        Order copyOrder = new Order();
+        copyOrder.setOrderId(this.orderId);
+        copyOrder.setUserId(this.userId);
+        copyOrder.setSequenceId(this.sequenceId);
+        copyOrder.setDirection(this.direction);
+        copyOrder.setPrice(this.price);
+        copyOrder.setQuantity(this.quantity);
+        copyOrder.setUnfilledQuantity(this.unfilledQuantity);
+        copyOrder.setOrderStatus(this.orderStatus);
+        copyOrder.setCreateAt(this.createAt);
+        copyOrder.setUpdateAt(this.updateAt);
+        return  copyOrder;
+    }
+
+    public int compareTo(Order o) {
+        return this.getUserId().compareTo(o.getUserId());
     }
 }

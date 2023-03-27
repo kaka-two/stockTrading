@@ -15,11 +15,11 @@ import java.util.List;
 @Component
 public class ClearService {
     private final AssertService assertService;
-    private final OrderService orderService;
+    private final OrderOpeService orderOpeService;
 
-    public ClearService(@Autowired AssertService assertService, @Autowired OrderService orderService) {
+    public ClearService(@Autowired AssertService assertService, @Autowired OrderOpeService orderOpeService) {
         this.assertService = assertService;
-        this.orderService = orderService;
+        this.orderOpeService = orderOpeService;
     }
 
     // 清算交易
@@ -33,7 +33,7 @@ public class ClearService {
         }
         // 删除交易完的taker
         if (takerOrder.getUnfilledQuantity().signum() == 0) {
-            orderService.removeOrder(takerOrder.getOrderId());
+            orderOpeService.removeOrder(takerOrder.getOrderId());
         }
     }
 
@@ -56,7 +56,7 @@ public class ClearService {
             }
             // 如果maker已经交易完，删除maker
             if (makerOrder.getOrderStatus() == OrderStatus.FULLY_FILLED) {
-                orderService.removeOrder(makerOrder.getOrderId());
+                orderOpeService.removeOrder(makerOrder.getOrderId());
             }
         }
     }
@@ -74,7 +74,7 @@ public class ClearService {
                     TransferType.FROZEN_TO_AVAILABLE, record.quantity());
             // 如果maker已经交易完，删除maker
             if (makerOrder.getOrderStatus() == OrderStatus.FULLY_FILLED) {
-                orderService.removeOrder(makerOrder.getOrderId());
+                orderOpeService.removeOrder(makerOrder.getOrderId());
             }
         }
     }
@@ -91,6 +91,6 @@ public class ClearService {
             }
         }
         // 删除订单
-        orderService.removeOrder(order.getOrderId());
+        orderOpeService.removeOrder(order.getOrderId());
     }
 }
