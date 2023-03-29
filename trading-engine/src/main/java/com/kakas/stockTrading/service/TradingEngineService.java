@@ -1,6 +1,9 @@
 package com.kakas.stockTrading.service;
 
 import com.kakas.stockTrading.bean.OrderBookBean;
+import com.kakas.stockTrading.dbService.EventDetailService;
+import com.kakas.stockTrading.dbService.MatchDetailServiceImpl;
+import com.kakas.stockTrading.dbService.OrderServiceImpl;
 import com.kakas.stockTrading.enums.TransferType;
 import com.kakas.stockTrading.message.ApiMessage;
 import com.kakas.stockTrading.message.NotifyMessage;
@@ -31,8 +34,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 @Component
 @Slf4j
 public class TradingEngineService {
-    @Value("${stockTrading.orderBookDepth}")
-    int orderBookDepth;
+    int orderBookDepth = 100;
 
     @Autowired
     AssertService assertService;
@@ -203,12 +205,12 @@ public class TradingEngineService {
         // 创建成功，匹配，清算后推送成功调用消息
         MatchResult matchResult = this.matchService.processOrder(order.getCreateAt(), order);
         this.clearService.clearMatchResult(matchResult);
-        this.apiQueue.add(ApiMessage.orderSuccess(event.getRefId(), event.getCreatedAt(), order.copy()));
+        this.apiQueue.add(ApiMessage.orderSuccess(event.getRefId(), event.getCreatedAt(), order.copyOrder()));
         this.orderBookChanged = true;
         // 收集notification，将taker的交易结果通知用户
         List<NotifyMessage> notifyMsgs = new ArrayList<>();
         notifyMsgs.add(NotifyMessage.createNotifyMessage(event.getCreatedAt(), "order_matched",
-                order.getOrderId(), order.copy()));
+                order.getOrderId(), order.copyOrder()));
         // 收集完成的订单closeOrders,同时生成MatchDetail, Tick, 以及maker的notification
         if (matchResult.getRecords().isEmpty()) {
             return;
@@ -222,7 +224,7 @@ public class TradingEngineService {
         for (MatchRecord record : matchResult.getRecords()) {
             Order maker = record.makerOrder();
             notifyMsgs.add(NotifyMessage.createNotifyMessage(event.getCreatedAt(), "order_matched",
-                    maker.getOrderId(), maker.copy()));
+                    maker.getOrderId(), maker.copyOrder()));
             if (maker.getOrderStatus().isFinalStatus) {
                 closedOrders.add(maker);
             }
@@ -256,8 +258,8 @@ public class TradingEngineService {
         this.clearService.clearCancelOrder(cancelOrder);
         // 撮合，清算完成后更新状态并发送调用结果，同时通知用户取消结果。
         this.orderBookChanged = true;
-        this.apiQueue.add(ApiMessage.orderSuccess(event.getRefId(), event.getCreatedAt(), cancelOrder.copy()));
-        this.notifyQueue.add(NotifyMessage.createNotifyMessage(event.getCreatedAt(), "order_canceled", cancelOrder.getUserId(), cancelOrder.copy()));
+        this.apiQueue.add(ApiMessage.orderSuccess(event.getRefId(), event.getCreatedAt(), cancelOrder.copyOrder()));
+        this.notifyQueue.add(NotifyMessage.createNotifyMessage(event.getCreatedAt(), "order_canceled", cancelOrder.getUserId(), cancelOrder.copyOrder()));
 
     }
 

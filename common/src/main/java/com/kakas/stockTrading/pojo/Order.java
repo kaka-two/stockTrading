@@ -14,7 +14,7 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class Order {
+public class Order implements Comparable<Order> {
 
     // 订单ID
     @TableId(value="id", type= IdType.AUTO)
@@ -47,7 +47,7 @@ public class Order {
         this.orderStatus = orderStatus;
         this.updateAt = updateAt;
     }
-    public Order copy() {
+    public Order copyOrder() {
         Order copyOrder = new Order();
         copyOrder.setOrderId(this.orderId);
         copyOrder.setUserId(this.userId);
@@ -62,7 +62,9 @@ public class Order {
         return  copyOrder;
     }
 
+    @Override
     public int compareTo(Order o) {
-        return this.getUserId().compareTo(o.getUserId());
+        int cmp = Long.compare(this.getUserId(), o.getUserId());
+        return cmp;
     }
 }

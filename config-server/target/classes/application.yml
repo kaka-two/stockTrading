@@ -10,4 +10,4 @@ spring:
     config:
       server:
         native:
-          search-locations: ./config-repo
+          search-locations: file:./config-repo, file:../config-repo, file:../../config-repo, file:../../../config-repo

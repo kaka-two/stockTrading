@@ -4,16 +4,14 @@
   <component name="MavenProjectsManager">
     <option name="originalFiles">
       <list>
-        <option value="$PROJECT_DIR$/common/pom.xml" />
         <option value="$PROJECT_DIR$/build/pom.xml" />
-        <option value="$PROJECT_DIR$/trading-api/pom.xml" />
-        <option value="$PROJECT_DIR$/trading-sequencer/pom.xml" />
-        <option value="$PROJECT_DIR$/trading-engine/pom.xml" />
-        <option value="$PROJECT_DIR$/push/pom.xml" />
-        <option value="$PROJECT_DIR$/quotation/pom.xml" />
         <option value="$PROJECT_DIR$/config-server/pom.xml" />
-        <option value="$PROJECT_DIR$/ui/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/parent/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="17" project-jdk-type="JavaSDK" />

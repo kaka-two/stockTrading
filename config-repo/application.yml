@@ -1,0 +1,39 @@
+spring:
+  # 配置kafka
+  kafka:
+    bootstrap-servers: ${KAFKA_SERVER:192.168.36.129:9092}
+    consumer:
+      # 最大提取消息数
+      max-poll-records: ${KAFKA_CONSUMER_MAX_POLL_RECORDS:500}
+      # 最大提取字节数
+      max-partition-fetch-bytes: ${KAFKA_MAX_PARTITION_FETCH_BYTES:1000000}
+
+  # 配置redis
+  redis:
+    host: ${REDIS_HOST:192.168.36.129}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:}
+    database: ${REDIS_DATABASE:0}
+
+  # 配置数据库以及连接池设置
+  datasource:
+    # 不使用SSL，因为使用的虚拟机数据库，开启允许一次执行多个查询
+    url: ${DATASOURCE_URL:jdbc:mysql://192.168.36.129/stockTrading?useSSL=false&allowMultiQueries=true&characterEncoding=utf8}
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # 连接池配置，取消自动提交，设置超时时间，设置最大连接数
+    hikari:
+      auto-commit: false
+      connection-timeout: ${DB_TIMEOUT:3000}
+      validation-timeout: ${DB_TIMEOUT:3000}
+      maximum-pool-size: ${DB_POOL_MAX:500}
+mybatis-plus:
+  global-config:
+    db-config:
+      id-type: auto
+      field-strategy: not_empty
+      db-type: mysql
+    configuration:
+      map-underscore-to-camel-case: true
+      log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

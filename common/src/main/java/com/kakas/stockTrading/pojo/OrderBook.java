@@ -67,7 +67,7 @@ public class OrderBook {
     };
 
     // 获取这个OrderBook的快照
-    public List<OrderBookItemBean> getOrderBook(int maxDepth) {
+    public List<OrderBookItemBean> getOrderBookBean(int maxDepth) {
         List<OrderBookItemBean> items = new ArrayList<>();
         OrderBookItemBean preItem = null;
         for (OrderKey key : this.book.keySet()) {

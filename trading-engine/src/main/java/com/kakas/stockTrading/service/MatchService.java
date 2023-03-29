@@ -1,7 +1,6 @@
 package com.kakas.stockTrading.service;
 
 import com.kakas.stockTrading.bean.OrderBookBean;
-import com.kakas.stockTrading.bean.OrderBookItemBean;
 import com.kakas.stockTrading.enums.Direction;
 import com.kakas.stockTrading.enums.OrderStatus;
 import com.kakas.stockTrading.pojo.MatchResult;
@@ -11,7 +10,6 @@ import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
-import java.util.List;
 
 @Component
 @Data
@@ -22,16 +20,16 @@ public class MatchService {
     public BigDecimal lastPrice;
 
     public MatchService() {
-        buyBook = new OrderBook(Direction.BUY);
-        sellBook = new OrderBook(Direction.SELL);
-        lastPrice = BigDecimal.ZERO;
+        this.buyBook = new OrderBook(Direction.BUY);
+        this.sellBook = new OrderBook(Direction.SELL);
+        this.lastPrice = BigDecimal.ZERO;
     }
 
     // 处理订单并返回匹配结果
     public MatchResult processOrder(long updateAt, Order takerOrder) {
         return switch (takerOrder.getDirection()) {
-            case BUY -> processOrder(updateAt, takerOrder, sellBook, buyBook);
-            case SELL -> processOrder(updateAt, takerOrder, buyBook, sellBook);
+            case BUY -> processOrder(updateAt, takerOrder, this.sellBook, this.buyBook);
+            case SELL -> processOrder(updateAt, takerOrder, this.buyBook, this.sellBook);
             default -> throw new IllegalArgumentException("Direction not found");
         };
     }
@@ -63,7 +61,7 @@ public class MatchService {
             }
             // 以maker价格成交
             BigDecimal price = makerOrder.getPrice();
-            lastPrice = price;
+            this.lastPrice = price;
             // 成交数量是taker和maker的未交易量的最小值
             BigDecimal filledQuantity = unFilledQuantityOfTaker.min(makerOrder.getUnfilledQuantity());
             // 记录交易
@@ -95,7 +93,7 @@ public class MatchService {
 
     // 取消订单
     public void cancel(Order order, long updateAt) {
-        OrderBook book = order.getDirection() == Direction.BUY ? buyBook : sellBook;
+        OrderBook book = order.getDirection() == Direction.BUY ? this.buyBook : this.sellBook;
         if (!book.remove(order)) {
             throw new IllegalArgumentException("Order not found in order book.");
         }
@@ -105,7 +103,7 @@ public class MatchService {
 
     // 获取MatchService此时的所有消息
     public OrderBookBean getOrderBookBean(int maxDepth) {
-        return new OrderBookBean(this.lastSequenceId, this.lastPrice, this.buyBook.getOrderBook(maxDepth), this.sellBook.getOrderBook(maxDepth));
+        return new OrderBookBean(this.lastSequenceId, this.lastPrice, this.buyBook.getOrderBookBean(maxDepth), this.sellBook.getOrderBookBean(maxDepth));
     }
 
 }
