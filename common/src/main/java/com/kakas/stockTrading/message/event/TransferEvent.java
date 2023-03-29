@@ -11,10 +11,6 @@ import java.math.BigDecimal;
  */
 @Data
 public class TransferEvent  extends Event  {
-    // null if not set.
-    private String refId;
-
-    private long createdAt;
 
     private Long fromUserId;
 

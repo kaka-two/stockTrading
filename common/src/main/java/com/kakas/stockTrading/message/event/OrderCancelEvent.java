@@ -8,10 +8,7 @@ import lombok.Data;
  */
 @Data
 public class OrderCancelEvent extends Event {
-    // null if not set.
-    private String refId;
 
-    private Long createdAt;
 
     private Long userId;
 

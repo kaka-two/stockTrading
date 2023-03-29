@@ -41,6 +41,20 @@ public class Order implements Comparable<Order> {
     // 更新时间
     private long updateAt;
 
+    // 创建订单
+    public static Order createOrder(Long userId, long sequenceId, Direction direction, BigDecimal price, BigDecimal quantity, long createAt) {
+        Order order = new Order();
+        order.setUserId(userId);
+        order.setSequenceId(sequenceId);
+        order.setDirection(direction);
+        order.setPrice(price);
+        order.setQuantity(quantity);
+        order.setUnfilledQuantity(quantity);
+        order.setOrderStatus(OrderStatus.PENDING);
+        order.setCreateAt(createAt);
+        order.setUpdateAt(createAt);
+        return order;
+    }
     // 更新订单
     public void updateOrder(BigDecimal unfilledQuantity, OrderStatus orderStatus, long updateAt) {
         this.unfilledQuantity = unfilledQuantity;

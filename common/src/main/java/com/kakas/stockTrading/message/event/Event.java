@@ -14,4 +14,9 @@ public abstract class Event implements Message {
      * Previous message sequence id.
      */
     private long previousId;
+
+    // null if not set.
+    private String refId;
+
+    private Long createdAt;
 }

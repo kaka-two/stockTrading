@@ -53,7 +53,7 @@ public class RedisService {
         // 读取脚本
         try (BufferedReader br = new BufferedReader(
                 new InputStreamReader(
-                        new FileInputStream(classPathFile), StandardCharsets.UTF_8))) {
+                        RedisService.class.getResourceAsStream(classPathFile), StandardCharsets.UTF_8))) {
             script = br.lines().collect(Collectors.joining("\n"));
         } catch (IOException e) {
             log.warn("Classpath file not found : {}", classPathFile);

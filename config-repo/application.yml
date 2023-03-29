@@ -18,9 +18,9 @@ spring:
   # 配置数据库以及连接池设置
   datasource:
     # 不使用SSL，因为使用的虚拟机数据库，开启允许一次执行多个查询
-    url: ${DATASOURCE_URL:jdbc:mysql://192.168.36.129/stockTrading?useSSL=false&allowMultiQueries=true&characterEncoding=utf8}
+    url: ${DATASOURCE_URL:jdbc:mysql://192.168.36.129/stocktrade?useSSL=false&allowMultiQueries=true&characterEncoding=utf8}
     username: ${DB_USERNAME:root}
-    password: ${DB_PASSWORD:}
+    password: ${DB_PASSWORD:password}
     driver-class-name: com.mysql.cj.jdbc.Driver
     # 连接池配置，取消自动提交，设置超时时间，设置最大连接数
     hikari:

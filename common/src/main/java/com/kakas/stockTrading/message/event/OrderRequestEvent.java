@@ -11,10 +11,6 @@ import java.math.BigDecimal;
  */
 @Data
 public class OrderRequestEvent  extends Event {
-    // null if not set.
-    private String refId;
-
-    private Long createdAt;
 
     private Long userId;
 

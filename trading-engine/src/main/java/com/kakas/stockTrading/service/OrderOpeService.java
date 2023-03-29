@@ -39,14 +39,7 @@ public class OrderOpeService {
             default -> throw new IllegalStateException("Unexpected value: " + direction);
         }
         // 创建订单
-        Order order = new Order();
-        order.setUserId(userId);
-        order.setSequenceId(sequenceId);
-        order.setDirection(direction);
-        order.setPrice(price);
-        order.setQuantity(quantity);
-        order.setCreateAt(createAt);
-        order.setUpdateAt(createAt);
+        Order order = Order.createOrder(userId, sequenceId, direction, price, quantity, createAt);
         // 添加到活跃订单和用户活跃订单
         activeOrder.put(order.getOrderId(), order);
         ConcurrentMap<Long, Order> map = userOrders.getOrDefault(userId, new ConcurrentHashMap<>());
