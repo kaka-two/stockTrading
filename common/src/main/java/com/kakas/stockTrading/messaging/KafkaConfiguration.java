@@ -3,6 +3,7 @@ package com.kakas.stockTrading.messaging;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.producer.ProducerConfig;
+import org.apache.kafka.common.serialization.StringDeserializer;
 import org.apache.kafka.common.serialization.StringSerializer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -61,14 +62,8 @@ public class KafkaConfiguration {
         configs.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         configs.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, batchSize);
         configs.put(ConsumerConfig.MAX_PARTITION_FETCH_BYTES_CONFIG, byteSize);
-//        //设置key反序列化器
-//        properties.put("key.deserializer", Class.forName("org.apache.kafka.common.serialization.StringDeserializer"));
-//
-//        //设置值反序列化器
-//        properties.put("value.deserializer", Class.forName("org.apache.kafka.common.serialization.StringDeserializer"));
-
-        configs.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
-        configs.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
+        configs.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
+        configs.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         return new DefaultKafkaConsumerFactory<>(configs);
     }
 
