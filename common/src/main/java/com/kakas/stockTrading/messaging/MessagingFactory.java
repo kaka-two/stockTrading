@@ -75,6 +75,8 @@ public class MessagingFactory {
                     public Collection<String> getTopics() {return List.of(topic.name());}
                 }
         );
+        log.info("create consumer of topic : {}, groupId : {} success", topic.name(), groupId);
+        log.info("try setup consumer of topic : {}, groupId : {}", topic.name(), groupId);
         // 启动listener容器，并调用传入的处理方法处理消息。
         listenerContainer.setupMessageListener(new BatchMessageListener<String, String>() {
             @Override
@@ -88,7 +90,10 @@ public class MessagingFactory {
                 messageHandler.processMessages(messages);
             }
         });
+        log.info("Setup consumer of topic : {}, groupId : {} success", topic.name(), groupId);
+        log.info("Try start consumer of topic : {}, groupId : {}", topic.name(), groupId);
         listenerContainer.start();
+        log.info("Start consumer of topic : {}, groupId : {} success", topic.name(), groupId);
         return listenerContainer::stop;
     }
 }

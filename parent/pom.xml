@@ -24,7 +24,7 @@
         <!-- 版本 -->
         <springcloud.version>2022.0.0</springcloud.version>
         <springdoc.version>2.0.0</springdoc.version>
-        <mybatisplus.version>3.5.2</mybatisplus.version>
+        <mybatisplus.version>3.5.3.1</mybatisplus.version>
         <vertx.version>4.3.1</vertx.version>
         <pebble.version>3.2.0</pebble.version>
     </properties>

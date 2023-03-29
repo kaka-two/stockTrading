@@ -61,6 +61,12 @@ public class KafkaConfiguration {
         configs.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers);
         configs.put(ConsumerConfig.MAX_POLL_RECORDS_CONFIG, batchSize);
         configs.put(ConsumerConfig.MAX_PARTITION_FETCH_BYTES_CONFIG, byteSize);
+//        //设置key反序列化器
+//        properties.put("key.deserializer", Class.forName("org.apache.kafka.common.serialization.StringDeserializer"));
+//
+//        //设置值反序列化器
+//        properties.put("value.deserializer", Class.forName("org.apache.kafka.common.serialization.StringDeserializer"));
+
         configs.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         configs.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class);
         return new DefaultKafkaConsumerFactory<>(configs);
