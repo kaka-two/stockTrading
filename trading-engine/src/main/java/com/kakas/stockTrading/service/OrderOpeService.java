@@ -7,11 +7,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 @Component
 public class OrderOpeService {
+    @Autowired(required = false)
+    ZoneId zoneId = ZoneId.systemDefault();
     private AssertService assertService;
 
     public OrderOpeService(@Autowired AssertService assertService) {
@@ -39,7 +44,11 @@ public class OrderOpeService {
             default -> throw new IllegalStateException("Unexpected value: " + direction);
         }
         // 创建订单
-        Order order = Order.createOrder(userId, sequenceId, direction, price, quantity, createAt);
+        ZonedDateTime zdt = Instant.ofEpochMilli(createAt).atZone(zoneId);
+        int year = zdt.getYear();
+        int month = zdt.getMonth().getValue();
+        long orderId = sequenceId * 10000 + (year * 100 + month);
+        Order order = Order.createOrder(orderId, userId, sequenceId, direction, price, quantity, createAt);
         // 添加到活跃订单和用户活跃订单
         activeOrder.put(order.getOrderId(), order);
         ConcurrentMap<Long, Order> map = userOrders.getOrDefault(userId, new ConcurrentHashMap<>());

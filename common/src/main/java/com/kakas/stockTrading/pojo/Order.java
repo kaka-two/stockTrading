@@ -10,6 +10,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.Instant;
+import java.time.ZonedDateTime;
 
 @Data
 @AllArgsConstructor
@@ -17,7 +19,6 @@ import java.math.BigDecimal;
 public class Order implements Comparable<Order> {
 
     // 订单ID
-    @TableId(value="id", type= IdType.AUTO)
     private Long orderId;
     // 订单关联的用户ID
     private Long userId;
@@ -42,8 +43,9 @@ public class Order implements Comparable<Order> {
     private long updateAt;
 
     // 创建订单
-    public static Order createOrder(Long userId, long sequenceId, Direction direction, BigDecimal price, BigDecimal quantity, long createAt) {
+    public static Order createOrder(Long orderId, Long userId, long sequenceId, Direction direction, BigDecimal price, BigDecimal quantity, long createAt) {
         Order order = new Order();
+        order.setOrderId(orderId);
         order.setUserId(userId);
         order.setSequenceId(sequenceId);
         order.setDirection(direction);
