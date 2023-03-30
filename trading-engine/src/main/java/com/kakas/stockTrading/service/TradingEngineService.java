@@ -136,6 +136,15 @@ public class TradingEngineService {
         this.notifyThread.interrupt();
         this.orderBookThread.interrupt();
         this.dbThread.interrupt();
+        try {
+            this.tickThread.join(1000);
+            this.apiThread.join(1000);
+            this.notifyThread.join(1000);
+            this.orderBookThread.join(1000);
+            this.dbThread.join(1000);
+        } catch (InterruptedException e) {
+            log.error("shutdown thread error", e);
+        }
     }
 
     // 监听器处理message的方法

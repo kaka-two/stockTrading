@@ -29,4 +29,12 @@ public class EventDetailService {
         return eventDetails.stream().map(eventDetail -> (Event)messageType.deserialize(eventDetail.getData()))
                 .collect(Collectors.toList());
     }
+
+    // 从数据库读取最新的事件
+    public Event loadLastEvent() {
+        QueryWrapper<EventDetail> eventDetailWrapper = new QueryWrapper<>();
+        eventDetailWrapper.orderByDesc("sequenceId").last("limit 1");
+        EventDetail eventDetail = eventDetailMapper.selectOne(eventDetailWrapper);
+        return (Event)messageType.deserialize(eventDetail.getData());
+    }
 }

@@ -19,4 +19,7 @@ public abstract class Event implements Message {
     private String refId;
 
     private Long createdAt;
+
+    // null if not set. For SequenceService in Trading-sequencer.
+    private Long uniqueId;
 }
