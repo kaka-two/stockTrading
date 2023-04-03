@@ -53,6 +53,15 @@ CREATE TABLE event_unique (
                         PRIMARY KEY(orderId)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT = 1000;
 
+CREATE TABLE event_detail (
+                        id BIGINT NOT NULL,
+                        sequenceId BIGINT NOT NULL,
+                        previousId BIGINT NOT NULL,
+                        data VARCHAR(10000) NOT NULL,
+                        createdAt BIGINT NOT NULL,
+                        PRIMARY KEY(id)
+) CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT = 1000;
+
 
 CREATE TABLE tick (
                        id BIGINT NOT NULL AUTO_INCREMENT,

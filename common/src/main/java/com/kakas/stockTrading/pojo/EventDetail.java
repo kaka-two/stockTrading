@@ -11,7 +11,7 @@ import lombok.Data;
 @Data
 public class EventDetail {
     @TableId(value="id", type= IdType.AUTO)
-    private Long Id;
+    private Long id;
 
     private Long sequenceId;
 
