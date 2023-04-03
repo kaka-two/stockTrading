@@ -25,7 +25,7 @@ public class EventDetailServiceImpl extends ServiceImpl<EventDetailMapper, Event
     // 从数据库读取lastSequenceId之后的所有事件
     public List<Event> loadEvents(long lastSequenceId) {
         QueryWrapper<EventDetail> eventDetailWrapper = new QueryWrapper<>();
-        eventDetailWrapper.gt("sequenceId", lastSequenceId).orderByAsc("sequenceId");
+        eventDetailWrapper.gt("sequence_id", lastSequenceId).orderByAsc("sequence_id");
         List<EventDetail> eventDetails = eventDetailMapper.selectList(eventDetailWrapper);
         return eventDetails.stream().map(eventDetail -> (Event)messageType.deserialize(eventDetail.getData()))
                 .collect(Collectors.toList());
@@ -34,8 +34,11 @@ public class EventDetailServiceImpl extends ServiceImpl<EventDetailMapper, Event
     // 从数据库读取最新的事件
     public Event loadLastEvent() {
         QueryWrapper<EventDetail> eventDetailWrapper = new QueryWrapper<>();
-        eventDetailWrapper.orderByDesc("sequenceId").last("limit 1");
+        eventDetailWrapper.orderByDesc("sequence_id").last("limit 1");
         EventDetail eventDetail = eventDetailMapper.selectOne(eventDetailWrapper);
+        if (eventDetail == null) {
+            return null;
+        }
         return (Event)messageType.deserialize(eventDetail.getData());
     }
 }

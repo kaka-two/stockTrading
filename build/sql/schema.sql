@@ -8,71 +8,66 @@ USE stocktrade;
 
 
 CREATE TABLE match_detail (
-                               id BIGINT NOT NULL AUTO_INCREMENT,
-                               sequenceId BIGINT NOT NULL,
-                               orderId BIGINT NOT NULL,
-                               counterOrderId BIGINT NOT NULL,
-                               userId BIGINT NOT NULL,
-                               counterUserId BIGINT NOT NULL,
-                               type VARCHAR(32) NOT NULL,
-                               direction VARCHAR(32) NOT NULL,
-                               price DECIMAL(36,18) NOT NULL,
-                               quantity DECIMAL(36,18) NOT NULL,
-                               createdAt BIGINT NOT NULL,
-                               CONSTRAINT UNI_OID_COID UNIQUE (orderId, counterOrderId),
-                               INDEX IDX_OID_CT (orderId,createdAt),
-                               PRIMARY KEY(id)
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    sequence_id BIGINT NOT NULL,
+    order_id BIGINT NOT NULL,
+    counter_order_id BIGINT NOT NULL,
+    user_id BIGINT NOT NULL,
+    counter_user_id BIGINT NOT NULL,
+    type VARCHAR(32) NOT NULL,
+    direction VARCHAR(32) NOT NULL,
+    price DECIMAL(36,18) NOT NULL,
+    quantity DECIMAL(36,18) NOT NULL,
+    created_at BIGINT NOT NULL,
+    CONSTRAINT UNI_OID_COID UNIQUE (order_id, counter_order_id),
+    INDEX IDX_OID_CT (order_id,created_at),
+    PRIMARY KEY(id)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT = 1000;
 
 
-CREATE TABLE order (
-                        orderId BIGINT NOT NULL,
-                        userId BIGINT NOT NULL,
-                        sequenceId BIGINT NOT NULL,
-                        direction VARCHAR(32) NOT NULL,
-                        price DECIMAL(36,18) NOT NULL,
-                        quantity DECIMAL(36,18) NOT NULL,
-                        unfilledQuantity DECIMAL(36,18) NOT NULL,
-                        orderStatus VARCHAR(32) NOT NULL,
-                        createdAt BIGINT NOT NULL,
-                        updatedAt BIGINT NOT NULL,
-                        PRIMARY KEY(orderId)
+CREATE TABLE `order` (
+    order_id BIGINT NOT NULL,
+    user_id BIGINT NOT NULL,
+    sequence_id BIGINT NOT NULL,
+    direction VARCHAR(32) NOT NULL,
+    price DECIMAL(36,18) NOT NULL,
+    quantity DECIMAL(36,18) NOT NULL,
+    unfilled_quantity DECIMAL(36,18) NOT NULL,
+    order_status VARCHAR(32) NOT NULL,
+    created_at BIGINT NOT NULL,
+    updated_at BIGINT NOT NULL,
+    PRIMARY KEY(order_id)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT = 1000;
+
 
 CREATE TABLE event_unique (
-                        orderId BIGINT NOT NULL,
-                        userId BIGINT NOT NULL,
-                        sequenceId BIGINT NOT NULL,
-                        direction VARCHAR(32) NOT NULL,
-                        price DECIMAL(36,18) NOT NULL,
-                        quantity DECIMAL(36,18) NOT NULL,
-                        unfilledQuantity DECIMAL(36,18) NOT NULL,
-                        orderStatus VARCHAR(32) NOT NULL,
-                        createdAt BIGINT NOT NULL,
-                        updatedAt BIGINT NOT NULL,
-                        PRIMARY KEY(orderId)
+    unique_id VARCHAR(50) NOT NULL,
+    sequence_id BIGINT NOT NULL,
+    created_at BIGINT NOT NULL,
+    PRIMARY KEY(unique_id)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT = 1000;
 
+
 CREATE TABLE event_detail (
-                        id BIGINT NOT NULL,
-                        sequenceId BIGINT NOT NULL,
-                        previousId BIGINT NOT NULL,
-                        data VARCHAR(10000) NOT NULL,
-                        createdAt BIGINT NOT NULL,
-                        PRIMARY KEY(id)
+    id BIGINT NOT NULL,
+    sequence_id BIGINT NOT NULL,
+    previous_id BIGINT NOT NULL,
+    data VARCHAR(10000) NOT NULL,
+    created_at BIGINT NOT NULL,
+    PRIMARY KEY(id)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT = 1000;
 
 
 CREATE TABLE tick (
-                       id BIGINT NOT NULL AUTO_INCREMENT,
-                       sequenceId BIGINT NOT NULL,
-                       takerOrderId BIGINT NOT NULL,
-                       makerOrderId BIGINT NOT NULL,
-                       takerDirection BIT NOT NULL,
-                       price DECIMAL(36,18) NOT NULL,
-                       quantity DECIMAL(36,18) NOT NULL,
-                       createdAt BIGINT NOT NULL,
-                       CONSTRAINT UNI_T_M UNIQUE (takerOrderId, makerOrderId),
-                       INDEX IDX_CAT (createdAt),
-                       PRIMARY KEY(id)
+    id BIGINT NOT NULL AUTO_INCREMENT,
+    sequence_id BIGINT NOT NULL,
+    taker_order_id BIGINT NOT NULL,
+    maker_order_id BIGINT NOT NULL,
+    taker_direction BIT NOT NULL,
+    price DECIMAL(36,18) NOT NULL,
+    quantity DECIMAL(36,18) NOT NULL,
+    created_at BIGINT NOT NULL,
+    CONSTRAINT UNI_T_M UNIQUE (taker_order_id, maker_order_id),
+    INDEX IDX_CAT (created_at),
+    PRIMARY KEY(id)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT = 1000;

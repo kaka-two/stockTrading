@@ -9,8 +9,6 @@ import lombok.Data;
  */
 @Data
 public class EventUnique {
-    @TableId(value="id", type= IdType.AUTO)
-    private Long Id;
 
     private String uniqueId;
 
