@@ -1,6 +1,7 @@
 package com.kakas.stockTrading.service;
 
 import com.kakas.stockTrading.dbService.EventDetailService;
+import com.kakas.stockTrading.dbService.EventDetailServiceImpl;
 import com.kakas.stockTrading.message.event.Event;
 import com.kakas.stockTrading.messaging.*;
 import jakarta.annotation.PostConstruct;
@@ -27,7 +28,7 @@ public class SequenceService {
     MessageType messageType;
 
     @Autowired
-    EventDetailService eventDetailService;
+    EventDetailServiceImpl eventDetailService;
 
     // 全局唯一sequenceId。
     private AtomicLong sequence;

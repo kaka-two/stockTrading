@@ -8,6 +8,9 @@ import lombok.Data;
 
 import java.math.BigDecimal;
 
+/**
+ * 成交详情
+ */
 @Data
 public class MatchDetail implements Comparable<MatchDetail>{
     @TableId(value="id", type= IdType.AUTO)

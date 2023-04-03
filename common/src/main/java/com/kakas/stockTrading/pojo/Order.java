@@ -38,12 +38,12 @@ public class Order implements Comparable<Order> {
     // 订单状态，包括等待成交、部分成交、完全成交、部分取消、完全取消
     private OrderStatus orderStatus;
     // 创建时间
-    private long createAt;
+    private long createdAt;
     // 更新时间
     private long updateAt;
 
     // 创建订单
-    public static Order createOrder(Long orderId, Long userId, long sequenceId, Direction direction, BigDecimal price, BigDecimal quantity, long createAt) {
+    public static Order createOrder(Long orderId, Long userId, long sequenceId, Direction direction, BigDecimal price, BigDecimal quantity, long createdAt) {
         Order order = new Order();
         order.setOrderId(orderId);
         order.setUserId(userId);
@@ -53,8 +53,8 @@ public class Order implements Comparable<Order> {
         order.setQuantity(quantity);
         order.setUnfilledQuantity(quantity);
         order.setOrderStatus(OrderStatus.PENDING);
-        order.setCreateAt(createAt);
-        order.setUpdateAt(createAt);
+        order.setCreatedAt(createdAt);
+        order.setUpdateAt(createdAt);
         return order;
     }
     // 更新订单
@@ -73,7 +73,7 @@ public class Order implements Comparable<Order> {
         copyOrder.setQuantity(this.quantity);
         copyOrder.setUnfilledQuantity(this.unfilledQuantity);
         copyOrder.setOrderStatus(this.orderStatus);
-        copyOrder.setCreateAt(this.createAt);
+        copyOrder.setCreatedAt(this.createdAt);
         copyOrder.setUpdateAt(this.updateAt);
         return  copyOrder;
     }

@@ -2,6 +2,7 @@ package com.kakas.stockTrading.service;
 
 import com.kakas.stockTrading.bean.OrderBookBean;
 import com.kakas.stockTrading.dbService.EventDetailService;
+import com.kakas.stockTrading.dbService.EventDetailServiceImpl;
 import com.kakas.stockTrading.dbService.MatchDetailServiceImpl;
 import com.kakas.stockTrading.dbService.OrderServiceImpl;
 import com.kakas.stockTrading.enums.TransferType;
@@ -55,7 +56,7 @@ public class TradingEngineService {
     MessagingFactory messagingFactory;
 
     @Autowired
-    EventDetailService eventDetailService;
+    EventDetailServiceImpl eventDetailService;
 
     @Autowired
     MatchDetailServiceImpl matchDetailService;
@@ -212,7 +213,7 @@ public class TradingEngineService {
             return;
         }
         // 创建成功，匹配，清算后推送成功调用消息
-        MatchResult matchResult = this.matchService.processOrder(order.getCreateAt(), order);
+        MatchResult matchResult = this.matchService.processOrder(order.getCreatedAt(), order);
         this.clearService.clearMatchResult(matchResult);
         this.apiQueue.add(ApiMessage.orderSuccess(event.getRefId(), event.getCreatedAt(), order.copyOrder()));
         this.orderBookChanged = true;
