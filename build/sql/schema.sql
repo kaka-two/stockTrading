@@ -71,3 +71,22 @@ CREATE TABLE tick (
     INDEX IDX_CAT (created_at),
     PRIMARY KEY(id)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT = 1000;
+
+
+CREATE TABLE user_profile (
+    user_id BIGINT NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    name VARCHAR(100) NOT NULL,
+    created_at BIGINT NOT NULL,
+    updated_at BIGINT NOT NULL,
+    CONSTRAINT UNI_EMAIL UNIQUE (email),
+    PRIMARY KEY(user_id)
+) CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT = 1000;
+
+
+CREATE TABLE password_auth (
+    user_id BIGINT NOT NULL,
+    random VARCHAR(100) NOT NULL,
+    passwd VARCHAR(100) NOT NULL,
+    PRIMARY KEY(user_id)
+) CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT = 1000;

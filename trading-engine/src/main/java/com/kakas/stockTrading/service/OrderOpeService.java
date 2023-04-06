@@ -4,6 +4,7 @@ import com.kakas.stockTrading.enums.AssertType;
 import com.kakas.stockTrading.enums.Direction;
 import com.kakas.stockTrading.pojo.Order;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
@@ -15,7 +16,7 @@ import java.util.concurrent.ConcurrentMap;
 
 @Component
 public class OrderOpeService {
-    @Autowired(required = false)
+    @Value("#{TradingConfiguration.timeZone}")
     ZoneId zoneId = ZoneId.systemDefault();
     private AssertService assertService;
 

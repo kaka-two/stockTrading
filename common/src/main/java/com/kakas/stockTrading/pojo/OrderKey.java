@@ -9,6 +9,6 @@ import java.math.BigDecimal;
 @Data
 @AllArgsConstructor
 public class OrderKey {
-    private long sequenceId;
+    private Long sequenceId;
     private BigDecimal price;
 }

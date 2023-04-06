@@ -1,6 +1,7 @@
 package com.kakas.stockTrading.service;
 
 import com.kakas.stockTrading.bean.OrderBookBean;
+import com.kakas.stockTrading.config.TradingConfiguration;
 import com.kakas.stockTrading.dbService.EventDetailService;
 import com.kakas.stockTrading.dbService.EventDetailServiceImpl;
 import com.kakas.stockTrading.dbService.MatchDetailServiceImpl;
@@ -25,6 +26,7 @@ import jakarta.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -35,6 +37,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 @Component
 @Slf4j
 public class TradingEngineService {
+    @Value("#{TradingConfiguration.orderBookDepth}")
     int orderBookDepth = 100;
 
     @Autowired

@@ -28,6 +28,7 @@ spring:
       connection-timeout: ${DB_TIMEOUT:3000}
       validation-timeout: ${DB_TIMEOUT:3000}
       maximum-pool-size: ${DB_POOL_MAX:500}
+
 mybatis-plus:
   global-config:
     db-config:
@@ -37,3 +38,11 @@ mybatis-plus:
     configuration:
       map-underscore-to-camel-case: true
       log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+trading:
+  config:
+    order-book-depth: ${ORDER_BOOK_DEPTH:50}
+    time-zone: ${TRADING_TIME_ZONE:}
+    api-endpoints:
+      trading-api: ${TRADING_API:http://192.168.36.129:8004}
+      trading-engine-api: ${TRADING_ENGINE_API:http://192.168.36.129:8003}
