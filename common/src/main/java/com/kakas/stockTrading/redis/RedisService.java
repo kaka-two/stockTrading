@@ -1,5 +1,6 @@
 package com.kakas.stockTrading.redis;
 
+import io.lettuce.core.Range;
 import io.lettuce.core.RedisClient;
 import io.lettuce.core.RedisURI;
 import io.lettuce.core.ScriptOutputType;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -92,6 +94,25 @@ public class RedisService {
             return commands.publish(topic, data);
         });
     }
+
+    public String get(String key) {
+        return executeSync(commands -> {
+            return commands.get(key);
+        });
+    }
+
+    public List<String> lrange(String key, long start, long end) {
+        return executeSync(commands -> {
+            return commands.lrange(key, start, end);
+        });
+    }
+
+    public List<String> zrangeByScore(String key, long start, long end) {
+        return executeSync(commands -> {
+            return commands.zrangebyscore(key, Range.create(start, end));
+        });
+    }
+
 
     // 预留的redis订阅消息功能
     // 大概思路是，传入频道和listener，然后创建redis listener的过程中，用传入的listener实际处理消息

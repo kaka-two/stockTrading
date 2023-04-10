@@ -24,7 +24,7 @@ public class InternalTradingEngineController {
     @Autowired
     private AssertService assertService;
 
-    @RequestMapping("/{userId}/assert")
+    @RequestMapping("/{userId}/asserts")
     public Map<AssertType, Assert> getAssert(@PathVariable("userId") Long userId) {
         Map<AssertType, Assert> map =  assertService.getAsserts(userId);
         if (map == null || map.isEmpty()) {
@@ -42,7 +42,7 @@ public class InternalTradingEngineController {
         return map.values().stream().map(Order::copyOrder).collect(Collectors.toList());
     }
 
-    @RequestMapping("/{userId}/order/{orderId}")
+    @RequestMapping("/{userId}/orders/{orderId}")
     public Order getOrder(@PathVariable("userId") Long userId, @PathVariable("orderId") Long orderId) {
         Order order = orderOpeService.getOrder(orderId);
         if (order == null || !order.getUserId().equals(userId)) {

@@ -15,6 +15,8 @@ public class TradingConfiguration {
 
     private ZoneId timeZone = ZoneId.systemDefault();
 
+    private String hmacKey;
+
     private ApiEndPoints apiEndPoints;
 
     @Data

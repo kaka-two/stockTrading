@@ -1,5 +1,6 @@
 package com.kakas.stockTrading.bean;
 
+import com.kakas.stockTrading.util.JsonUtil;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
@@ -9,6 +10,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 public class OrderBookBean {
+    public static final String Empty = JsonUtil.writeJson(new OrderBookBean(0L, BigDecimal.ZERO, List.of(), List.of()));
 
     private Long sequenceId;
 
