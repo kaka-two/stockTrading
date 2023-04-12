@@ -29,7 +29,7 @@ public class ApiRegistrationFilter extends FilterRegistrationBean<Filter> {
     @Autowired
     UserProfileServiceImpl userProfileService;
 
-    @Value("#{TradingConfiguration.hmacKey}")
+    @Value("#{tradingConfiguration.hmacKey}")
     String hmacKey;
 
     @PostConstruct

@@ -2,6 +2,7 @@ package com.kakas.stockTrading.message.event;
 
 import com.kakas.stockTrading.enums.Direction;
 import com.kakas.stockTrading.message.Message;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 import java.math.BigDecimal;

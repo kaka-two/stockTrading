@@ -90,3 +90,43 @@ CREATE TABLE password_auth (
     passwd VARCHAR(100) NOT NULL,
     PRIMARY KEY(user_id)
 ) CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT = 1000;
+
+CREATE TABLE day_bar (
+    start_time BIGINT NOT NULL,
+    open_price DECIMAL(36,18) NOT NULL,
+    high_price DECIMAL(36,18) NOT NULL,
+    low_price DECIMAL(36,18) NOT NULL,
+    close_price DECIMAL(36,18) NOT NULL,
+    quantity DECIMAL(36,18) NOT NULL,
+    PRIMARY KEY(start_time)
+) CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT = 1000;
+
+CREATE TABLE hour_bar (
+    start_time BIGINT NOT NULL,
+    open_price DECIMAL(36,18) NOT NULL,
+    high_price DECIMAL(36,18) NOT NULL,
+    low_price DECIMAL(36,18) NOT NULL,
+    close_price DECIMAL(36,18) NOT NULL,
+    quantity DECIMAL(36,18) NOT NULL,
+    PRIMARY KEY(start_time)
+) CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT = 1000;
+
+CREATE TABLE min_bar (
+    start_time BIGINT NOT NULL,
+    open_price DECIMAL(36,18) NOT NULL,
+    high_price DECIMAL(36,18) NOT NULL,
+    low_price DECIMAL(36,18) NOT NULL,
+    close_price DECIMAL(36,18) NOT NULL,
+    quantity DECIMAL(36,18) NOT NULL,
+    PRIMARY KEY(start_time)
+) CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT = 1000;
+
+CREATE TABLE sec_bar (
+    start_time BIGINT NOT NULL,
+    open_price DECIMAL(36,18) NOT NULL,
+    high_price DECIMAL(36,18) NOT NULL,
+    low_price DECIMAL(36,18) NOT NULL,
+    close_price DECIMAL(36,18) NOT NULL,
+    quantity DECIMAL(36,18) NOT NULL,
+    PRIMARY KEY(start_time)
+) CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT = 1000;

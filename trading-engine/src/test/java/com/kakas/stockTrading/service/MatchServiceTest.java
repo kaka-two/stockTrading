@@ -42,7 +42,7 @@ class MatchServiceTest {
     void processOrder() {
         List<MatchRecord> records = new ArrayList<>();
         for (Order order : list) {
-            MatchResult result = matchService.processOrder(order.getCreateAt(), order);
+            MatchResult result = matchService.processOrder(order.getCreatedAt(), order);
             records.addAll(result.getRecords());
         }
         assertArrayEquals(new MatchRecord[] {
@@ -58,9 +58,9 @@ class MatchServiceTest {
     @Test
     void cancel() {
         for (int i = 0; i < 2; i++) {
-            MatchResult result = matchService.processOrder(list.get(i).getCreateAt(), list.get(i));
+            MatchResult result = matchService.processOrder(list.get(i).getCreatedAt(), list.get(i));
         }
-        matchService.cancel(list.get(0), list.get(0).getCreateAt());
+        matchService.cancel(list.get(0), list.get(0).getCreatedAt());
         OrderBook book = matchService.getBuyBook();
         assertTrue(book.getFirst() == list.get(1));
         assertTrue(book.size() == 1);
@@ -77,8 +77,8 @@ class MatchServiceTest {
         order.setUnfilledQuantity(new BigDecimal(quantity));
         order.setOrderStatus(OrderStatus.PENDING);
         order.setUserId(userId);
-        order.setCreateAt(1234567890000L + this.sequenceId);
-        order.setUpdateAt(order.getCreateAt());
+        order.setCreatedAt(1234567890000L + this.sequenceId);
+        order.setUpdateAt(order.getCreatedAt());
         return order;
     }
 }

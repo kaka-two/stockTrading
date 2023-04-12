@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
 @Component
 @Slf4j
 public class TradingEngineApiProxyService {
-    @Value("#{TradingConfiguration.apiEndpoints.tradingEngineApi}")
+    @Value("#{tradingConfiguration.apiEndPoints.tradingEngineApi}")
     private String tradingEngineApi;
 
     private OkHttpClient okHttpClient = new OkHttpClient.Builder()

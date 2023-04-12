@@ -37,7 +37,7 @@ import java.util.concurrent.ConcurrentLinkedQueue;
 @Component
 @Slf4j
 public class TradingEngineService {
-    @Value("#{TradingConfiguration.orderBookDepth}")
+    @Value("#{tradingConfiguration.orderBookDepth}")
     int orderBookDepth = 100;
 
     @Autowired

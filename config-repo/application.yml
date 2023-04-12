@@ -45,5 +45,5 @@ trading:
     time-zone: ${TRADING_TIME_ZONE:}
     hmac-key: ${HMAC_KEY:TradingThisHmacKey4StockConfig}
     api-endpoints:
-      trading-api: ${TRADING_API:http://192.168.36.129:8004}
-      trading-engine-api: ${TRADING_ENGINE_API:http://192.168.36.129:8003}
+      trading-api: ${TRADING_API:http://localhost:8004}
+      trading-engine-api: ${TRADING_ENGINE_API:http://localhost:8003}

@@ -16,7 +16,7 @@ import java.util.concurrent.ConcurrentMap;
 
 @Component
 public class OrderOpeService {
-    @Value("#{TradingConfiguration.timeZone}")
+    @Autowired(required = false)
     ZoneId zoneId = ZoneId.systemDefault();
     private AssertService assertService;
 

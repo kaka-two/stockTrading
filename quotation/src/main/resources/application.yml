@@ -1,7 +1,5 @@
 spring:
   application:
-    name: quotation
-  cloud:
-    config:
-      uri: ${CONFIG_SERVER:http://localhost:8888}
-      fail-fast: true # 如果配置服务器不可用，应用程序应该立即失败，而不是等待配置获取超时
+    name: trading-api
+  config:
+    import: configserver:${CONFIG_SERVER:http://localhost:8888}

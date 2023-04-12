@@ -40,4 +40,8 @@ public class Tick {
         tick.createdAt = createdAt;
         return tick;
     }
+
+    public String toJson() {
+        return "[" + createdAt + "," + (takerDirection ? 1 : 0) + "," + price + "," + quantity + "]";
+    }
 }
