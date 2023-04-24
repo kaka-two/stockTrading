@@ -2,6 +2,7 @@ package com.kakas.stockTrading.util;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -33,6 +34,15 @@ public class JsonUtil {
     public static <T> T readJson(String json, Class<T> clazz) {
         try {
             return objectMapper.readValue(json, clazz);
+        } catch (JsonProcessingException e) {
+            log.warn("cannot read json: " + json, e);
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static <T> T readJson(String json,  TypeReference<T> ref) {
+        try {
+            return objectMapper.readValue(json, ref);
         } catch (JsonProcessingException e) {
             log.warn("cannot read json: " + json, e);
             throw new RuntimeException(e);

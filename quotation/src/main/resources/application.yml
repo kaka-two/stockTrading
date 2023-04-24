@@ -1,5 +1,5 @@
 spring:
   application:
-    name: trading-api
+    name: quotation
   config:
     import: configserver:${CONFIG_SERVER:http://localhost:8888}
