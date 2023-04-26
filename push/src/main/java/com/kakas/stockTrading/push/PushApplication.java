@@ -12,6 +12,7 @@ public class PushApplication {
     public static void main(String[] args) {
         System.setProperty("vertx.disableFileCPResolving", "true");
         SpringApplication app = new SpringApplication(PushApplication.class);
+        // 禁用Spring的Web，因为我们使用Vertx:
         app.setWebApplicationType(WebApplicationType.NONE);
         app.run(args);
     }
