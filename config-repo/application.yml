@@ -44,6 +44,7 @@ trading:
     order-book-depth: ${ORDER_BOOK_DEPTH:50}
     time-zone: ${TRADING_TIME_ZONE:}
     hmac-key: ${HMAC_KEY:TradingThisHmacKey4StockConfig}
+    token-timeout: ${TRADING_TOKEN_TIMEOUT:P3D}
     api-endpoints:
       trading-api: ${TRADING_API:http://localhost:8004}
       trading-engine-api: ${TRADING_ENGINE_API:http://localhost:8003}

@@ -25,6 +25,12 @@
             <artifactId>common</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <dependency>
+            <groupId>io.pebbletemplates</groupId>
+            <artifactId>pebble-spring-boot-starter</artifactId>
+            <version>${pebble.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

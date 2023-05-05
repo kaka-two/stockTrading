@@ -5,6 +5,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.Duration;
 import java.time.ZoneId;
 
 
@@ -20,6 +21,7 @@ public class TradingConfiguration {
 
     private ApiEndPoints apiEndPoints;
 
+    private Duration tokenTimeout;
 
     @Bean
     public ZoneId createZoneId() {
