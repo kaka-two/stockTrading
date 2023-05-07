@@ -74,9 +74,16 @@ public class RestClient {
         this.objectMapper = objectMapper;
         this.client = client;
     }
+    public <T> T get(Class<T> clazz, String path, String authHeader, Map<String, String> query) {
+        return request(clazz, null, "GET", path, authHeader, query, null);
+    }
+
+    public <T> T post(Class<T> clazz, String path, String authHeader, Object body) {
+        return request(clazz, null, "POST", path, authHeader, null, body);
+    }
 
     /**
-     * @param clazz 类型
+     * @param clazz response body的类型
      * @param ref 类型
      * @param method get 或 post
      * @param path 请求url路径,以/开头
