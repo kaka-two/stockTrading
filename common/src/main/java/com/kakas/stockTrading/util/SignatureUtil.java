@@ -5,6 +5,9 @@ import lombok.extern.slf4j.Slf4j;
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
 import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.HexFormat;
 
 @Slf4j
 public class SignatureUtil {
@@ -40,6 +43,23 @@ public class SignatureUtil {
         return hs.toString().toLowerCase();
     }
 
+    /**
+     * Generate SHA-256 as hex string (all lower-case).
+     *.
+     * @return Hex string.
+     */
+    public static String sha256(String str) {
+        byte[] input = str.getBytes(StandardCharsets.UTF_8);
+        MessageDigest md = null;
+        try {
+            md = MessageDigest.getInstance("SHA-256");
+        } catch (NoSuchAlgorithmException e) {
+            throw new RuntimeException(e);
+        }
+        md.update(input);
+        byte[] digest = md.digest();
+        return HexFormat.of().formatHex(digest);
+    }
 }
 
 

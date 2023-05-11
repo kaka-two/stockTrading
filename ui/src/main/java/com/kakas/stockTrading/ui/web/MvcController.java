@@ -1,9 +1,17 @@
 package com.kakas.stockTrading.ui.web;
 
+import com.kakas.stockTrading.bean.AuthToken;
+import com.kakas.stockTrading.bean.TransferRequestBean;
 import com.kakas.stockTrading.client.RestClient;
 import com.kakas.stockTrading.ctx.UserContext;
 import com.kakas.stockTrading.dbService.UserProfileServiceImpl;
+import com.kakas.stockTrading.enums.AssertType;
+import com.kakas.stockTrading.enums.UserType;
+import com.kakas.stockTrading.pojo.UserProfile;
+import com.kakas.stockTrading.util.SignatureUtil;
 import jakarta.annotation.PostConstruct;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.bouncycastle.math.raw.Mod;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +25,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Random;
 import java.util.regex.Pattern;
 
 @Controller
@@ -66,7 +76,7 @@ public class MvcController {
 
     @GetMapping("/signup")
     public ModelAndView signup() {
-        if(UserContext.getUserId() == null) {
+        if(UserContext.getUserId() != null) {
             return redirect("/");
         }
         return prepareModelAndView("signup");
@@ -100,23 +110,46 @@ public class MvcController {
 
     @GetMapping("/signin")
     public ModelAndView signin() {
-
+        if(UserContext.getUserId() != null) {
+            return redirect("/");
+        }
+        return prepareModelAndView("signin");
     }
 
     @PostMapping("/signin")
-    public ModelAndView signin(String email, String password) {
+    public ModelAndView signin(@RequestParam("email") String email, @RequestParam("name")  String password, HttpServletRequest request, HttpServletResponse response) {
+        // check email
+        if (email == null || email.isEmpty()) {
+            return prepareModelAndView("signin", Map.of("email", email,  "error", "Invalid email or password."));
+        }
+        email = email.trim().toLowerCase();
+        // check password
+        if (password == null ||  password.isEmpty()) {
+            return prepareModelAndView("signin", Map.of("email", email, "error", "Invalid email or password."));
+        }
 
+        UserProfile userProfile = userService.signIn(email, password);
+        AuthToken authToken = new AuthToken(userProfile.getUserId(), System.currentTimeMillis() + 1000 * cookieService.getExpiredInSeconds());
+        cookieService.setTokenCookie(request, response, authToken);
+        return redirect("/");
     }
 
     @GetMapping("/signout")
-    public ModelAndView signout() {
-
+    public ModelAndView signout(HttpServletRequest request, HttpServletResponse response) {
+        cookieService.deleteTokenCookie(request, response);
+        return redirect("/");
     }
 
     @PostMapping(value = "/websocket/token", produces = "application/json")
     @ResponseBody
     String requestWebsocketToken() {
-
+        Long userId = UserContext.getUserId();
+        if (userId == null) {
+            return "\"\"";
+        }
+        AuthToken authToken = new AuthToken(userId, System.currentTimeMillis() + 60_000);
+        String strToken = authToken.toSecureString(hmacKey);
+        return "\"" + strToken + "\"";
     }
 
     private boolean isLocalEnv() {
@@ -124,8 +157,28 @@ public class MvcController {
                 && Arrays.equals(environment.getDefaultProfiles(), new String[] {"default"});
     }
 
-    private void doSignup(String email, String name, String password) {
+    private UserProfile doSignup(String email, String name, String password) {
+        UserProfile profile = userService.signup(email, name, password);
+        // 本地开发环境下自动给用户增加资产:
+        if (isLocalEnv()) {
+            log.warn("auto deposit assets for user {} in local dev env...", profile.getEmail());
+            Random random = new Random(profile.getUserId());
+            deposit(profile.getUserId(), AssertType.StockA, new BigDecimal(random.nextInt(5_00, 10_00)).movePointLeft(2));
+            deposit(profile.getUserId(), AssertType.Money, new BigDecimal(random.nextInt(100000_00, 400000_00)).movePointLeft(2));
+        }
+        log.info("user signed up: {}", profile);
+        return profile;
+    }
 
+    private void deposit(Long userId, AssertType asset, BigDecimal amount) {
+        var req = new TransferRequestBean();
+        req.setTransferId(SignatureUtil.sha256(userId + "/" + asset + "/" + amount.stripTrailingZeros().toPlainString())
+                .substring(0, 32));
+        req.setAmount(amount);
+        req.setAsset(asset);
+        req.setFromUserId(UserType.ROOT.getUserTypeId());
+        req.setToUserId(userId);
+        restClient.post(Map.class, "/internal/transfer", null, req);
     }
 
     private ModelAndView redirect(String url) {
