@@ -33,7 +33,7 @@ public class ProxyFilterRegistrationBean extends FilterRegistrationBean<Filter> 
     @Autowired
     ObjectMapper objectMapper;
 
-    @Value("#{TradingConfiguration.hmacKey}")
+    @Value("#{tradingConfiguration.hmacKey}")
     String hmacKey;
 
     @PostConstruct
@@ -45,7 +45,6 @@ public class ProxyFilterRegistrationBean extends FilterRegistrationBean<Filter> 
         setOrder(200);
     }
 
-    @Slf4j
     class ProxyFilter implements Filter {
         @Override
         public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {

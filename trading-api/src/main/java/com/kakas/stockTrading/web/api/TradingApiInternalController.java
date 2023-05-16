@@ -28,7 +28,6 @@ public class TradingApiInternalController {
                 transferRequest.getTransferId(), transferRequest.getFromUserId(), transferRequest.getToUserId(),
                 transferRequest.getAsset(), transferRequest.getAmount());
         transferRequest.validate();
-        Long userId = UserContext.getRequiredUserId();
         // 创建转账的消息， 允许重复发送通过，通过uniqueId去重
         var event = new TransferEvent();
         event.setUniqueId(transferRequest.getTransferId());

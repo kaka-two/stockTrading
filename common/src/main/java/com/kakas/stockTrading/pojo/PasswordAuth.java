@@ -1,5 +1,7 @@
 package com.kakas.stockTrading.pojo;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 @Data
@@ -7,6 +9,7 @@ public class PasswordAuth {
     /**
      * 关联至用户ID.
      */
+    @TableId
     private Long userId;
 
     /**

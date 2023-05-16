@@ -17,10 +17,10 @@ import java.time.Duration;
 public class CookieService {
     public final String TokenCookie = "_stocktoken_";
 
-    @Value("#{TradingConfiguration.hmacKey}")
+    @Value("#{tradingConfiguration.hmacKey}")
     String hmacKey;
 
-    @Value("#{TradingConfiguration.tokenTimeout}")
+    @Value("#{tradingConfiguration.tokenTimeout}")
     Duration tokenTimeout;
 
     public long getExpiredInSeconds() {

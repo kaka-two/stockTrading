@@ -25,7 +25,7 @@ CREATE TABLE match_detail (
 ) CHARACTER SET utf8 COLLATE utf8_general_ci AUTO_INCREMENT = 1000;
 
 
-CREATE TABLE `order` (
+CREATE TABLE orders (
     order_id BIGINT NOT NULL,
     user_id BIGINT NOT NULL,
     sequence_id BIGINT NOT NULL,
@@ -49,7 +49,7 @@ CREATE TABLE event_unique (
 
 
 CREATE TABLE event_detail (
-    id BIGINT NOT NULL,
+    id BIGINT NOT NULL AUTO_INCREMENT,
     sequence_id BIGINT NOT NULL,
     previous_id BIGINT NOT NULL,
     data VARCHAR(10000) NOT NULL,
@@ -74,7 +74,7 @@ CREATE TABLE tick (
 
 
 CREATE TABLE user_profile (
-    user_id BIGINT NOT NULL,
+    user_id BIGINT NOT NULL AUTO_INCREMENT,
     email VARCHAR(100) NOT NULL,
     name VARCHAR(100) NOT NULL,
     created_at BIGINT NOT NULL,

@@ -1,11 +1,13 @@
 package com.kakas.stockTrading.pojo.bars;
 
+import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
 import java.math.BigDecimal;
 
 @Data
 public class HourBar {
+    @TableId
     private long startTime;
 
     private BigDecimal openPrice;

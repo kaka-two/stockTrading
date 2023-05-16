@@ -3,6 +3,7 @@ package com.kakas.stockTrading.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableName;
 import com.kakas.stockTrading.enums.Direction;
 import com.kakas.stockTrading.enums.OrderStatus;
 import lombok.AllArgsConstructor;
@@ -16,6 +17,7 @@ import java.time.ZonedDateTime;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@TableName("orders")
 public class Order implements Comparable<Order> {
 
     // 订单ID

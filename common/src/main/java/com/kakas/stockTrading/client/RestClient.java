@@ -40,10 +40,10 @@ public class RestClient {
             try {
                 URI uri = new URI(apiEndpoint);
                 if (!"https".equals(uri.getScheme()) && !"http".equals(uri.getScheme())) {
-                    throw new IllegalArgumentException("Invalid api endpoint, " + apiEndpoint);
+                    throw new IllegalArgumentException("Invalid api endpoint case 1, " + apiEndpoint);
                 }
-                if (uri.getPath() == null || uri.getPath().isEmpty()) {
-                    throw new IllegalArgumentException("Invalid api endpoint, " + apiEndpoint);
+                if (uri.getPath() != null && !uri.getPath().isEmpty()) {
+                    throw new IllegalArgumentException("Invalid api endpoint case 2, " + apiEndpoint + " uri path, " + uri.getPath());
                 }
                 this.scheme = uri.getScheme();
                 this.host = uri.getHost();
@@ -153,7 +153,7 @@ public class RestClient {
                 throw new Exception("request code error" + response.code());
             }
         } catch (Exception e) {
-            log.error("request execute error : {}", request.url().url());
+            log.warn("request execute error : {}", request.url().url());
             throw new RuntimeException(e);
         }
     }

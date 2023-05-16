@@ -35,7 +35,7 @@ import java.util.regex.Pattern;
 @Controller
 @Slf4j
 public class MvcController {
-    @Value("#{TradingConfiguration.hmacKey}")
+    @Value("#{tradingConfiguration.hmacKey}")
     String hmacKey;
 
     @Autowired
@@ -117,7 +117,7 @@ public class MvcController {
     }
 
     @PostMapping("/signin")
-    public ModelAndView signin(@RequestParam("email") String email, @RequestParam("name")  String password, HttpServletRequest request, HttpServletResponse response) {
+    public ModelAndView signin(@RequestParam("email") String email, @RequestParam("password") String password, HttpServletRequest request, HttpServletResponse response) {
         // check email
         if (email == null || email.isEmpty()) {
             return prepareModelAndView("signin", Map.of("email", email,  "error", "Invalid email or password."));

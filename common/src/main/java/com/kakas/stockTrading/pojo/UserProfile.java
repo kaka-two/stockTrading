@@ -1,6 +1,7 @@
 package com.kakas.stockTrading.pojo;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.Data;
 
@@ -15,8 +16,10 @@ public class UserProfile {
     /**
      * 登录Email
      */
+    @TableField("email")
     private String email;
 
+    @TableField("name")
     private String name;
 
     private Long createdAt;

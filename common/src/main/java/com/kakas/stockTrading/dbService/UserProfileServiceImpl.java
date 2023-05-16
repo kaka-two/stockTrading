@@ -31,10 +31,14 @@ public class UserProfileServiceImpl extends ServiceImpl<UserProfileMapper, UserP
     public UserProfile getUserProfileByEmail(String email) {
         QueryWrapper<UserProfile> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("email", email).last("limit 1");
-        return userProfileMapper.selectOne(queryWrapper);
+        UserProfile user = userProfileMapper.selectOne(queryWrapper);
+        if (user == null) {
+            log.info("user " + email + " do not exist.");
+        }
+        return  user;
     }
 
-    public UserProfile signup(String name, String email, String password) {
+    public UserProfile signup(String email, String name, String password) {
         final Long ts = System.currentTimeMillis();
         // 插入user_profile表
         UserProfile userProfile = UserProfile.createUserProfile(email, name, ts);
